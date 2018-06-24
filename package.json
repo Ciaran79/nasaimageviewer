@@ -32,6 +32,7 @@
   "dependencies": {
     "autoprefixer": "^8.6.3",
     "cssnano": "^3.10.0",
-    "pixrem": "^4.0.1"
+    "pixrem": "^4.0.1",
+    "whatwg-fetch": "^2.0.4"
   }
 }

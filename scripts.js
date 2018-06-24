@@ -1,5 +1,7 @@
+// import "babel-polyfill";
+// import 'whatwg-fetch';
+
 $(document).ready(function () {
-    // "use strict";
 
     // Event handlers
 

@@ -54,6 +54,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-babel');
 
     // Default task(s).
-    grunt.registerTask('default', ['babel']);
+    grunt.registerTask('default', ['postcss', 'babel']);
 
 };
