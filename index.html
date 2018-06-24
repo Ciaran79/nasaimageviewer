@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
+
+    <link rel="stylesheet" href="style.css">
+    <title>Nasa image of the day</title>
+</head>
+
+<body>
+    <main id="content">
+        <!-- UI controls -->
+        <div id="user-interface" class="text-center">
+            <h1 id="app-title">Nasa image of the day</h1>
+            <div class="row">
+                <div class="col-sm">
+                    <label>Images per page:
+                        <br>
+                        <input type="number" id="article-number" value="4" min="1" max="9" maxlength="1">
+                    </label>
+                </div>
+                <div class="col-sm">
+                    <label>Date:
+                        <br>
+                        <input type="date" id="date-selector">
+                    </label>
+                </div>
+            </div>
+
+            <div id="spacer-small" class="p-1"></div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <button type="button" id="show-articles" class="btn btn-primary col ">Show Images</button>
+                </div>
+                <div class="col-sm-6">
+                    <button id="hide-controls" class="btn btn-primary col">Hide UI</button>
+                </div>
+                <div class="col-sm-6">
+                    <button type="button" id="previous-page" class="btn btn-primary col">previous day</button>
+                </div>
+                <div class="col-sm-6">
+                    <button type="button" id="next-page" class="btn btn-primary col">Next day</button>
+                </div>
+            </div>
+            <div id="spacer-small" class="p-1"></div>
+        </div>
+        <div id="image-grid-area">
+        </div>
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
+        crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
+    <script src="scripts.js"></script>
+
+    <script>
+        Date.prototype.toDateInputValue = (function () {
+            var local = new Date(this);
+            local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+            return local.toJSON().slice(0, 10);
+        });
+        document.getElementById('date-selector').value = new Date().toDateInputValue();
+    </script>
+</body>
+
+</html>

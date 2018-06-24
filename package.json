@@ -1,0 +1,37 @@
+{
+  "name": "nasaimageviewer",
+  "version": "1.0.0",
+  "description": "A viewer for NASA api",
+  "main": "scripts.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ciaran79/NASA-Image-Viewer.git"
+  },
+  "keywords": [
+    "NASA",
+    "Space"
+  ],
+  "author": "Ciaran Kamp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ciaran79/NASA-Image-Viewer/issues"
+  },
+  "homepage": "https://github.com/Ciaran79/NASA-Image-Viewer#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "grunt": "^1.0.3",
+    "grunt-babel": "^7.0.0",
+    "grunt-contrib-uglify": "^3.3.0",
+    "grunt-postcss": "^0.9.0"
+  },
+  "dependencies": {
+    "autoprefixer": "^8.6.3",
+    "cssnano": "^3.10.0",
+    "pixrem": "^4.0.1"
+  }
+}
