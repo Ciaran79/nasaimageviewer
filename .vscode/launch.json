@@ -8,7 +8,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome",
-            "url": "http://localhost:81/ciarankamp/nasaimageviewer",
+            "url": "http://localhost:81/nasaimageviewer",
             "webRoot": "${workspaceFolder}"
         },
         {

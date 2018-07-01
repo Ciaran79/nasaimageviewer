@@ -42,9 +42,9 @@
                 <div class="col-sm-6">
                     <button type="button" id="show-articles" class="btn btn-primary col ">Show Images</button>
                 </div>
-                <div class="col-sm-6">
+                <!-- <div class="col-sm-6">
                     <button id="hide-controls" class="btn btn-primary col">Hide UI</button>
-                </div>
+                </div> -->
                 <div class="col-sm-6">
                     <button type="button" id="previous-page" class="btn btn-primary col">previous day</button>
                 </div>
@@ -68,14 +68,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
     <script src="dist/js/scripts.js"></script>
 
-    <script>
-        Date.prototype.toDateInputValue = (function () {
-            var local = new Date(this);
-            local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-            return local.toJSON().slice(0, 10);
-        });
-        document.getElementById('date-selector').value = new Date().toDateInputValue();
-    </script>
 </body>
 
 </html>

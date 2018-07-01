@@ -1,32 +1,31 @@
 "use strict";
 
-// import "babel-polyfill";
-// import "whatwg-fetch";
-// import Promise from "promise-polyfill";
-// // To add to window
-// if (!window.Promise) {
-//     window.Promise = Promise;
-// }
-
 $(document).ready(function () {
     // Event handlers
 
+    var dateSelector = document.querySelector("#date-selector");
+    var gridArea = document.querySelector("#image-grid-area");
+    var articleNumber = document.querySelector('#article-number');
+
+    Date.prototype.toDateInputValue = function () {
+        var local = new Date(this);
+        local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+        return local.toJSON().slice(0, 10);
+    };
+    document.getElementById('date-selector').value = new Date().toDateInputValue();
+
     $("#next-page").click(function () {
-        addDays(1);
+        dateSelector.value = incDecDate(1, dateSelector.value);
         displayArticles();
     });
 
     $("#previous-page").click(function () {
-        addDays(-1);
+        dateSelector.value = incDecDate(-1, dateSelector.value);
         displayArticles();
     });
 
     $("#show-articles").click(function () {
         displayArticles();
-    });
-
-    $("#hide-controls").click(function () {
-        hideControls();
     });
 
     $(".article").hover(function () {
@@ -39,10 +38,6 @@ $(document).ready(function () {
 
     // functions
 
-    function hideControls() {
-        doucment.querySelector("#user-interface").hide();
-    }
-
     function clearClones() {
         if (document.querySelectorAll("article").length > 0) {
             var elems = document.querySelectorAll("article");
@@ -52,31 +47,42 @@ $(document).ready(function () {
         }
     }
 
-    function addDays(days) {
-        var selectedDate = document.querySelector("#date-selector").value;
-        var result = new Date(selectedDate);
+    function incDecDate(days, date) {
+        var result = new Date(date);
         result.setDate(result.getDate() + days);
         result = result.toISOString().slice(0, 10);
-        document.querySelector("#date-selector").value = result;
+        return result;
+    }
+
+    function createDateArray() {
+        var articleCount = articleNumber.value;
+        var date = dateSelector.value;
+        var dates = [];
+        dates.push(date);
+        articleCount--;
+        while (articleCount > 0) {
+            var newDate = incDecDate(-1, date);
+            dates.push(newDate);
+            articleCount--;
+            date = newDate;
+        }
+        return dates;
     }
 
     function displayArticles() {
         //Clear previous article element clones if any are present...
         clearClones();
-        var dateArray = ["2018-06-14", "2018-06-15", "2018-06-16", "2018-06-17"];
-        var currentDate = "date=" + document.querySelector("#date-selector").value;
+        var currentDate = "date=" + dateSelector.value;
+        var dateArray = createDateArray();
         var url = "https://api.nasa.gov/planetary/apod?";
         var apiKey = "api_key=ZyAZ65TRjYZ4Sto72jlrgtOieAXPJuVymJFrf0RS";
         var imageCount = 1;
 
         dateArray.forEach(function (element) {
-            fetch(url + apiKey + "&" + "date=" + element, {
-                api_key: "ZyAZ65TRjYZ4Sto72jlrgtOieAXPJuVymJFrf0RS",
-                date: currentDate
-            }).then(function (response) {
+            fetch(url + apiKey + "&date=" + element, {}).then(function (response) {
                 return response.json();
             }).then(function (data) {
-                document.querySelector("#image-grid-area").insertAdjacentHTML("beforeend", '<article id="article' + imageCount + '" class="article"><a target="_blank" id="image-link' + imageCount + '" data-fancybox="gallery" class="image-link"><img id="img' + imageCount + '" src="" class="images"></a><a target="_blank" id="title-link' + imageCount + '" class=""title-link><h5 id="title' + imageCount + '" class="title"></h5></a></article>');
+                gridArea.insertAdjacentHTML("beforeend", '<article id="article' + imageCount + '" class="article"><a target="_blank" id="image-link' + imageCount + '" data-fancybox="gallery" class="image-link"><img id="img' + imageCount + '" src="" class="images"></a><a target="_blank" id="title-link' + imageCount + '" class=""title-link><h5 id="title' + imageCount + '" class="title"></h5></a></article>');
 
                 var postUrl = data.hdurl;
                 var articleTitleContent = data.title;
@@ -91,7 +97,6 @@ $(document).ready(function () {
                     width: "25%",
                     "margin-top": "15px"
                 };
-
                 var imageLink = document.querySelector("#image-link" + imageCount + "");
                 var titleLink = document.querySelector("#title-link" + imageCount + "");
                 var articleTitleArea = $("#title" + imageCount + "");

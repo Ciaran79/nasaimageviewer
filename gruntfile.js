@@ -45,13 +45,23 @@ module.exports = function (grunt) {
                     'dist/js/scripts.js': 'scripts.js'
                 }
             }
-        }
+        },
+        watch: {
+            scripts: {
+              files: ['scripts.js'],
+              tasks: ['babel'],
+              options: {
+                spawn: false,
+              },
+            },
+          },
     });
 
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-postcss');
     grunt.loadNpmTasks('grunt-babel');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Default task(s).
     grunt.registerTask('default', ['postcss', 'babel']);
