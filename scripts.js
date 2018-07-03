@@ -55,9 +55,9 @@ $(document).ready(function () {
         }
     }
 
-    function incDecDate(days, date) {
+    function incDecDate(incDec, date) {
         let result = new Date(date);
-        result.setDate(result.getDate() + days);
+        result.setDate(result.getDate() + incDec);
         result = result
             .toISOString()
             .slice(0, 10);
