@@ -97,7 +97,7 @@ $(document).ready(function () {
                     let postUrl = data.hdurl;
                     let articleTitleContent = data.title;
                     let articleImageContent = data.url;
-                    let imageSize = "w=600&h=400&fit=1";
+                    // let imageSize = "w=600&h=400&fit=1";
                     let placeHolderImage = "space.jpg";
                     let imageAreaDimensions = {
                         width: "100%",
@@ -119,7 +119,7 @@ $(document).ready(function () {
                     if (articleImageContent != null) {
                         articleImageArea
                             .css(imageAreaDimensions)
-                            .attr("src", articleImageContent + "?" + imageSize);
+                            .attr("src", articleImageContent);
                     } else {
                         articleImageArea
                             .css(placeHolderImageAreaDimensions)
