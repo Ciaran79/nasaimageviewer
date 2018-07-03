@@ -99,10 +99,10 @@ $(document).ready(function () {
                     let articleImageContent = data.url;
                     // let imageSize = "w=600&h=400&fit=1";
                     let placeHolderImage = "space.jpg";
-                    let imageAreaDimensions = {
-                        width: "100%",
-                        "margin-top": "0px"
-                    };
+                    // let imageAreaDimensions = {
+                    //     width: "100%",
+                    //     "margin-top": "0px"
+                    // };
                     let placeHolderImageAreaDimensions = {
                         width: "25%",
                         "margin-top": "15px"
@@ -118,7 +118,7 @@ $(document).ready(function () {
 
                     if (articleImageContent != null) {
                         articleImageArea
-                            .css(imageAreaDimensions)
+                            // .css(imageAreaDimensions)
                             .attr("src", articleImageContent);
                     } else {
                         articleImageArea

@@ -47,9 +47,9 @@ $(document).ready(function () {
         }
     }
 
-    function incDecDate(days, date) {
+    function incDecDate(incDec, date) {
         var result = new Date(date);
-        result.setDate(result.getDate() + days);
+        result.setDate(result.getDate() + incDec);
         result = result.toISOString().slice(0, 10);
         return result;
     }
@@ -87,12 +87,12 @@ $(document).ready(function () {
                 var postUrl = data.hdurl;
                 var articleTitleContent = data.title;
                 var articleImageContent = data.url;
-                var imageSize = "w=600&h=400&fit=1";
+                // let imageSize = "w=600&h=400&fit=1";
                 var placeHolderImage = "space.jpg";
-                var imageAreaDimensions = {
-                    width: "100%",
-                    "margin-top": "0px"
-                };
+                // let imageAreaDimensions = {
+                //     width: "100%",
+                //     "margin-top": "0px"
+                // };
                 var placeHolderImageAreaDimensions = {
                     width: "25%",
                     "margin-top": "15px"
@@ -107,7 +107,9 @@ $(document).ready(function () {
                 titleLink.setAttribute("href", postUrl);
 
                 if (articleImageContent != null) {
-                    articleImageArea.css(imageAreaDimensions).attr("src", articleImageContent + "?" + imageSize);
+                    articleImageArea
+                    // .css(imageAreaDimensions)
+                    .attr("src", articleImageContent);
                 } else {
                     articleImageArea.css(placeHolderImageAreaDimensions).attr("src", placeHolderImage);
                 }
