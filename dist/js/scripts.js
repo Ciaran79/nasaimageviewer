@@ -4,6 +4,7 @@ $(document).ready(function () {
     // Event handlers
 
     var dateSelector = document.querySelector("#date-selector");
+    var todaysDate = dateSelector.value;
     var gridArea = document.querySelector("#image-grid-area");
     var articleNumber = document.querySelector('#article-number');
 
@@ -15,8 +16,12 @@ $(document).ready(function () {
     document.getElementById('date-selector').value = new Date().toDateInputValue();
 
     $("#next-page").click(function () {
-        dateSelector.value = incDecDate(1, dateSelector.value);
-        displayArticles();
+        if (dateSelector.value == todaysDate) {
+            alert('you are viewing the most recent pictures');
+        } else {
+            dateSelector.value = incDecDate(1, dateSelector.value);
+            displayArticles();
+        }
     });
 
     $("#previous-page").click(function () {
@@ -89,10 +94,7 @@ $(document).ready(function () {
                 var articleImageContent = data.url;
                 // let imageSize = "w=600&h=400&fit=1";
                 var placeHolderImage = "space.jpg";
-                // let imageAreaDimensions = {
-                //     width: "100%",
-                //     "margin-top": "0px"
-                // };
+                // let imageAreaDimensions = {     width: "100%",     "margin-top": "0px" };
                 var placeHolderImageAreaDimensions = {
                     width: "25%",
                     "margin-top": "15px"

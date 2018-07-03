@@ -11,8 +11,8 @@
         crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
-
     <link rel="stylesheet" href="dist/css/style.css">
+
     <title>Nasa image of the day</title>
 </head>
 
@@ -21,27 +21,24 @@
         <!-- UI controls -->
         <div id="user-interface" class="text-center">
             <h1 id="app-title">Nasa image of the day</h1>
-            <div class="row">
-                <div class="col-sm">
+            <div class="input-container">
+                <div class="">
                     <label>Images to show:
                         <br>
                         <input type="number" id="article-number" value="4" min="1" max="10" maxlength="1">
                     </label>
                 </div>
-                <div class="col-sm">
+                <div class="">
                     <label>Date:
                         <br>
                         <input type="date" id="date-selector">
                     </label>
                 </div>
             </div>
-
-            <div id="spacer-small" class="p-1"></div>
-
             <div class="button-container">
-                    <button type="button" id="previous-page" class="btn btn-primary ">Older</button>
-                    <button type="button" id="show-articles" class="btn btn-primary">Show Images</button>
-                    <button type="button" id="next-page" class="btn btn-primary">Newer</button>
+                <button type="button" id="previous-page" class="btn btn-primary ">Older</button>
+                <button type="button" id="show-articles" class="btn btn-primary">Show Images</button>
+                <button type="button" id="next-page" class="btn btn-primary">Newer</button>
             </div>
         </div>
         <div id="image-grid-area">

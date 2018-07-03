@@ -20,6 +20,10 @@ button {
   max-width: 600px;
   margin: auto; }
 
+.input-container {
+  display: flex;
+  justify-content: center; }
+
 article {
   background-color: white;
   font-weight: bold;
@@ -41,7 +45,7 @@ a.highlighted {
 
 img {
   width: 100%;
-  height: 250px;
+  height: 300px;
   object-fit: cover; }
 
 #image-grid-area {

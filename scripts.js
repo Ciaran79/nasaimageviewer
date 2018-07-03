@@ -3,9 +3,10 @@
 $(document).ready(function () {
     // Event handlers
 
-    var dateSelector = document.querySelector("#date-selector");
-    var gridArea = document.querySelector("#image-grid-area");
-    var articleNumber = document.querySelector('#article-number');
+    const dateSelector = document.querySelector("#date-selector");
+    const todaysDate = dateSelector.value;
+    const gridArea = document.querySelector("#image-grid-area");
+    const articleNumber = document.querySelector('#article-number');
 
     Date.prototype.toDateInputValue = (function () {
         var local = new Date(this);
@@ -19,8 +20,12 @@ $(document).ready(function () {
         .value = new Date().toDateInputValue();
 
     $("#next-page").click(function () {
-        dateSelector.value = incDecDate(1, dateSelector.value);
-        displayArticles();
+        if (dateSelector.value == todaysDate) {
+            alert('you are viewing the most recent pictures');
+        } else {
+            dateSelector.value = incDecDate(1, dateSelector.value);
+            displayArticles();
+        }
     });
 
     $("#previous-page").click(function () {
@@ -70,7 +75,7 @@ $(document).ready(function () {
         let dates = [];
         dates.push(date);
         articleCount--;
-        while(articleCount>0){
+        while (articleCount > 0) {
             let newDate = incDecDate(-1, date)
             dates.push(newDate);
             articleCount--;
@@ -99,10 +104,7 @@ $(document).ready(function () {
                     let articleImageContent = data.url;
                     // let imageSize = "w=600&h=400&fit=1";
                     let placeHolderImage = "space.jpg";
-                    // let imageAreaDimensions = {
-                    //     width: "100%",
-                    //     "margin-top": "0px"
-                    // };
+                    // let imageAreaDimensions = {     width: "100%",     "margin-top": "0px" };
                     let placeHolderImageAreaDimensions = {
                         width: "25%",
                         "margin-top": "15px"
@@ -118,7 +120,7 @@ $(document).ready(function () {
 
                     if (articleImageContent != null) {
                         articleImageArea
-                            // .css(imageAreaDimensions)
+                        // .css(imageAreaDimensions)
                             .attr("src", articleImageContent);
                     } else {
                         articleImageArea
