@@ -102,9 +102,7 @@ $(document).ready(function () {
                     let postUrl = data.hdurl;
                     let articleTitleContent = data.title;
                     let articleImageContent = data.url;
-                    // let imageSize = "w=600&h=400&fit=1";
                     let placeHolderImage = "space.jpg";
-                    // let imageAreaDimensions = {     width: "100%",     "margin-top": "0px" };
                     let placeHolderImageAreaDimensions = {
                         width: "25%",
                         "margin-top": "15px"
@@ -119,9 +117,7 @@ $(document).ready(function () {
                     titleLink.setAttribute("href", postUrl);
 
                     if (articleImageContent != null) {
-                        articleImageArea
-                        // .css(imageAreaDimensions)
-                            .attr("src", articleImageContent);
+                        articleImageArea.attr("src", articleImageContent);
                     } else {
                         articleImageArea
                             .css(placeHolderImageAreaDimensions)

@@ -1,14 +1,40 @@
+html {
+  font-size: 62.5%; }
+
 body {
   font-family: "Open Sans", sans-serif;
   background-color: #0e0e0e;
   color: white; }
 
+h1 {
+  font-size: 3.5rem; }
+
 h5 {
   font-weight: 800;
-  font-size: 1.5em; }
+  font-size: 1.5rem; }
+
+p {
+  font-size: 2.4rem; }
 
 button {
-  margin-top: 10px; }
+  margin-top: 10px;
+  font-size: 1.6rem;
+  background-color: #81f6ff;
+  border-color: #81f6ff;
+  padding: 5px 20px;
+  border-radius: 5px;
+  border: none;
+  transition: background-color 0.3s; }
+
+button:hover {
+  background-color: #4bbdc5;
+  cursor: pointer; }
+
+label {
+  font-size: 1.6rem; }
+
+input {
+  font-size: 1.6rem; }
 
 #content {
   background-color: black;
@@ -16,13 +42,35 @@ button {
   height: 100vh; }
 
 #user-interface {
-  padding-bottom: 10px;
-  max-width: 600px;
-  margin: auto; }
+  max-width: 450px;
+  margin: auto;
+  display: grid;
+  padding: 10px; }
+
+.nasa-logo {
+  max-width: 450px;
+  margin: auto;
+  display: flex; }
+
+#app-title {
+  grid-area: 1/1/-1/2;
+  text-transform: uppercase; }
 
 .input-container {
   display: flex;
-  justify-content: center; }
+  justify-content: space-between;
+  flex-wrap: wrap; }
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; }
+
+#image-grid-area {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 2rem;
+  padding: 2rem; }
 
 article {
   background-color: white;
@@ -39,30 +87,12 @@ a {
   color: #575757;
   transition: all 0.25s; }
 
-a.highlighted {
-  color: #f32373;
-  text-decoration: none; }
+a:hover {
+  color: #f32373; }
 
 img {
   width: 100%;
   height: 300px;
   object-fit: cover; }
-
-#image-grid-area {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 2rem;
-  padding: 2rem; }
-
-/* media queries */
-@media screen and (max-width: 400px) {
-  h5 {
-    font-size: 1em; } }
-@media screen and (max-width: 230px) {
-  h5 {
-    font-size: 0.8em; }
-
-  .title {
-    padding: 0.8em; } }
 
 /*# sourceMappingURL=style.css.map */

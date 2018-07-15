@@ -92,9 +92,7 @@ $(document).ready(function () {
                 var postUrl = data.hdurl;
                 var articleTitleContent = data.title;
                 var articleImageContent = data.url;
-                // let imageSize = "w=600&h=400&fit=1";
                 var placeHolderImage = "space.jpg";
-                // let imageAreaDimensions = {     width: "100%",     "margin-top": "0px" };
                 var placeHolderImageAreaDimensions = {
                     width: "25%",
                     "margin-top": "15px"
@@ -109,9 +107,7 @@ $(document).ready(function () {
                 titleLink.setAttribute("href", postUrl);
 
                 if (articleImageContent != null) {
-                    articleImageArea
-                    // .css(imageAreaDimensions)
-                    .attr("src", articleImageContent);
+                    articleImageArea.attr("src", articleImageContent);
                 } else {
                     articleImageArea.css(placeHolderImageAreaDimensions).attr("src", placeHolderImage);
                 }
