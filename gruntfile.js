@@ -1,10 +1,7 @@
-module.exports = function (grunt) {
-
+module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
-    pkg: grunt
-      .file
-      .readJSON('package.json'),
+    pkg: grunt.file.readJSON('package.json'),
     postcss: {
       options: {
         // map: false, // inline sourcemaps
@@ -17,43 +14,43 @@ module.exports = function (grunt) {
 
         processors: [
           require('pixrem')(), // add fallbacks for rem units
-          require('autoprefixer')({browsers: 'last 2 versions'}), // add vendor prefixes
+          require('autoprefixer')({ browsers: 'last 2 versions' }), // add vendor prefixes
           require('cssnano')() // minify the result
         ]
       },
       dist: {
-        src: 'style.css',
+        src: 'src/css/style.css',
         dest: 'dist/css/style.css'
       }
     },
     babel: {
       options: {
         sourceMap: true,
-        presets: ['env']
+        presets: [
+          [
+            '@babel/preset-env',
+            {
+              useBuiltIns: 'entry'
+            }
+          ]
+        ]
       },
       dist: {
         files: {
-          'dist/js/scripts.js': 'scripts.js'
+          'dist/js/scripts.js': 'src/js/scripts.js'
         }
       }
     },
     watch: {
       scripts: {
-        files: [
-          'style.scss', 'scripts.js'
-        ],
-        tasks: [
-          'sass', 'babel', 'postcss'
-        ],
-        options: {
-          spawn: false
-        }
+        files: ['src/scss/style.scss', 'src/js/scripts.js'],
+        tasks: ['sass', 'postcss', 'babel']
       }
     },
     sass: {
       dist: {
         files: {
-          'style.css': 'style.scss'
+          'src/css/style.css': 'src/scss/style.scss'
         }
       }
     }
@@ -68,5 +65,4 @@ module.exports = function (grunt) {
 
   // Default task(s).
   grunt.registerTask('default', ['sass', 'postcss', 'babel']);
-
 };

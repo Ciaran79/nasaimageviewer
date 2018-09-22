@@ -1,24 +1,24 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function(event) {
-  console.log('DOM fully loaded and parsed'); // variables
-
-  var dateSelector = document.querySelector('#date-selector');
-  var todaysDate = dateSelector.value;
-  var gridArea = document.querySelector('#image-grid-area');
-  var articleNumber = document.querySelector('#article-number');
-  var url = 'https://api.nasa.gov/planetary/apod?';
-  var apiKey = 'api_key=ZyAZ65TRjYZ4Sto72jlrgtOieAXPJuVymJFrf0RS';
-  var imageCount = 1;
+  console.log('DOM fully loaded and parsed');
+  // variables
+  const dateSelector = document.querySelector('#date-selector');
+  const todaysDate = dateSelector.value;
+  const gridArea = document.querySelector('#image-grid-area');
+  const articleNumber = document.querySelector('#article-number');
+  const url = 'https://api.nasa.gov/planetary/apod?';
+  const apiKey = 'api_key=ZyAZ65TRjYZ4Sto72jlrgtOieAXPJuVymJFrf0RS';
+  let imageCount = 1;
 
   Date.prototype.toDateInputValue = function() {
     var local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
     return local.toJSON().slice(0, 10);
   };
+  document.getElementById('date-selector').value = new Date().toDateInputValue();
 
-  document.getElementById('date-selector').value = new Date().toDateInputValue(); //Events
-
+  //Events
   document.getElementById('next-page').click(function() {
     if (dateSelector.value == todaysDate) {
       alert('you are viewing the most recent pictures');
@@ -27,73 +27,76 @@ document.addEventListener('DOMContentLoaded', function(event) {
       displayArticles();
     }
   });
+
   document.getElementById('previous-page').click(function() {
     dateSelector.value = incDecDate(-1, dateSelector.value);
     displayArticles();
   });
+
   document.getElementById('show-articles').click(function() {
     displayArticles();
   });
-  displayArticles(); // functions
 
+  displayArticles();
+
+  // functions
   function clearPrevious() {
     if (document.querySelectorAll('article').length > 0) {
       var elems = document.querySelectorAll('article');
-      elems.forEach(function(element) {
+      elems.forEach(element => {
         element.remove();
       });
     }
   }
 
   function incDecDate(incDec, date) {
-    var result = new Date(date);
+    let result = new Date(date);
     result.setDate(result.getDate() + incDec);
     result = result.toISOString().slice(0, 10);
     return result;
   }
 
   function createDateArray() {
-    var articleCount = articleNumber.value;
-    var date = dateSelector.value;
-    var dates = [];
+    let articleCount = articleNumber.value;
+    let date = dateSelector.value;
+    let dates = [];
     dates.push(date);
     articleCount--;
-
     while (articleCount > 0) {
-      var newDate = incDecDate(-1, date);
+      let newDate = incDecDate(-1, date);
       dates.push(newDate);
       articleCount--;
       date = newDate;
     }
-
     return dates;
   }
 
   function displayArticles() {
     //First clear previous article element clones if any are present...
-    clearPrevious(); // let currentDate = 'date=' + dateSelector.value;
+    clearPrevious();
+    // let currentDate = 'date=' + dateSelector.value;
+    let dateArray = createDateArray();
+    console.log(dateArray);
 
-    var dateArray = createDateArray();
-    console.log(dateArray); // dateArray.forEach(date => getRemoteData(date));
-
-    for (var index = 0; index < dateArray.length; index++) {
-      var date = dateArray[index];
+    // dateArray.forEach(date => getRemoteData(date));
+    for (let index = 0; index < dateArray.length; index++) {
+      const date = dateArray[index];
       getRemoteData(date);
     }
-  } //   const request = async () => {
+  }
+
+  //   const request = async () => {
   //     const response = await fetch(url + apiKey + '&date=' + date, {});
   //     console.log(response);
+
   //     //   .then(response => response.json())
   //     //   .then(function(data) {
   //     //     createNewElements(data);
   //     //   });
   //   };
-
   function getRemoteData(date) {
     fetch(url + apiKey + '&date=' + date, {})
-      .then(function(response) {
-        return response.json();
-      })
+      .then(response => response.json())
       .then(function(data) {
         createNewElements(data);
       });
@@ -114,15 +117,17 @@ document.addEventListener('DOMContentLoaded', function(event) {
         imageCount +
         '" class="title"></h5></a></article>'
     );
-    var postUrl = data.hdurl;
-    var articleTitleContent = data.title;
-    var articleImageContent = data.url;
-    var placeHolderImage = 'space.jpg';
-    var placeHolderImageAreaDimensions = "width: '25%', 'margin-top': '15px'";
-    var imageLink = document.querySelector('#image-link' + imageCount);
-    var titleLink = document.querySelector('#title-link' + imageCount);
-    var articleTitleArea = document.getElementById('title' + imageCount);
-    var articleImageArea = document.getElementById('img' + imageCount);
+
+    let postUrl = data.hdurl;
+    let articleTitleContent = data.title;
+    let articleImageContent = data.url;
+    let placeHolderImage = 'space.jpg';
+    let placeHolderImageAreaDimensions = "width: '25%', 'margin-top': '15px'";
+    let imageLink = document.querySelector('#image-link' + imageCount);
+    let titleLink = document.querySelector('#title-link' + imageCount);
+    let articleTitleArea = document.getElementById('title' + imageCount);
+    let articleImageArea = document.getElementById('img' + imageCount);
+
     articleTitleArea.innerHTML = articleTitleContent;
     imageLink.setAttribute('href', postUrl);
     titleLink.setAttribute('href', postUrl);
@@ -134,8 +139,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
         .setAttribute('style', placeHolderImageAreaDimensions)
         .setAttribute('src', placeHolderImage);
     }
-
     imageCount++;
   }
 });
-//# sourceMappingURL=scripts.js.map
