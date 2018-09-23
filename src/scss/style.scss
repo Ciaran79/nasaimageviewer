@@ -90,6 +90,11 @@ article {
   box-shadow: 0 1px 8px 1px rgba(61, 61, 61, 0.479);
   display: flex;
   flex-direction: column;
+  opacity: 0;
+  transition: all 1s;
+}
+.show {
+  opacity: 1;
 }
 .title {
   padding: 0.8em 1.5em 0.8em 1.5em;

@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     displayArticles();
   });
 
-  displayArticles();
+  displayArticles(showArticles);
 
   // functions
   function clearPrevious() {
@@ -83,6 +83,15 @@ document.addEventListener('DOMContentLoaded', function(event) {
         createNewElements(element);
       });
     }, 1000);
+    setTimeout(() => {
+      showArticles();
+    }, 1200);
+  }
+
+  function showArticles() {
+    document
+      .querySelectorAll('article')
+      .forEach(element => element.classList.add('show'));
   }
 
   function addRemoteDataToArray(dateArray, resultsArray) {

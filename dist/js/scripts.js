@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
   document.getElementById('show-articles').addEventListener('click', function () {
     displayArticles();
   });
-  displayArticles(); // functions
+  displayArticles(showArticles); // functions
 
   function clearPrevious() {
     if (document.querySelectorAll('article').length > 0) {
@@ -81,6 +81,15 @@ document.addEventListener('DOMContentLoaded', function (event) {
         createNewElements(element);
       });
     }, 1000);
+    setTimeout(function () {
+      showArticles();
+    }, 1200);
+  }
+
+  function showArticles() {
+    document.querySelectorAll('article').forEach(function (element) {
+      return element.classList.add('show');
+    });
   }
 
   function addRemoteDataToArray(dateArray, resultsArray) {
