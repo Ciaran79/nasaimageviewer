@@ -1,52 +1,56 @@
-//Variables
-$bodyFont: 'Open Sans', sans-serif;
-$textColor: white;
-$niceBlue: #81f6ff;
-$hoverBlue: #4bbdc5;
-
 html {
   font-size: 62.5%;
 }
+
 body {
-  font-family: $bodyFont;
-  background-color: rgb(14, 14, 14);
-  color: $textColor;
+  font-family: "Open Sans", sans-serif;
+  background-color: #0e0e0e;
+  color: white;
 }
+
 h1 {
   font-size: 3.5rem;
 }
+
 h5 {
   font-weight: 800;
   font-size: 1.5rem;
 }
+
 p {
   font-size: 2.4rem;
 }
+
 button {
   margin-top: 10px;
   font-size: 1.6rem;
-  background-color: $niceBlue;
-  border-color: $niceBlue;
+  background-color: #81f6ff;
+  border-color: #81f6ff;
   padding: 5px 20px;
   border-radius: 5px;
   border: none;
   transition: background-color 0.3s;
 }
+
 button:hover {
-  background-color: $hoverBlue;
+  background-color: #4bbdc5;
   cursor: pointer;
 }
+
 label {
   font-size: 1.6rem;
 }
+
 input {
   font-size: 1.6rem;
 }
+
 #content {
   background-color: black;
   margin: auto;
   height: 100vh;
 }
+
 #user-interface {
   max-width: 1100px;
   width: 90%;
@@ -55,20 +59,24 @@ input {
   grid-template-columns: 1fr 1fr;
   padding: 10px;
 }
+
 .nasa-logo {
   max-width: 450px;
   margin: auto;
   display: flex;
 }
+
 #app-title {
   grid-area: 1/1/-1/2;
   text-transform: uppercase;
 }
+
 .input-container {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
 .button-container {
   display: flex;
   justify-content: space-between;
@@ -82,8 +90,6 @@ input {
   padding: 2rem;
 }
 
-//The Images
-
 article {
   background-color: white;
   font-weight: bold;
@@ -91,21 +97,27 @@ article {
   display: flex;
   flex-direction: column;
 }
+
 .title {
   padding: 0.8em 1.5em 0.8em 1.5em;
   text-shadow: 0.5px 0.5px 0.2px #00000085;
   margin: 0;
 }
+
 a {
-  color: rgb(87, 87, 87);
+  color: #575757;
   transition: all 0.25s;
   text-align: center;
 }
+
 a:hover {
-  color: rgb(243, 35, 115);
+  color: #f32373;
 }
+
 img {
   width: 100%;
   height: 300px;
   object-fit: cover;
 }
+
+/*# sourceMappingURL=style.css.map */

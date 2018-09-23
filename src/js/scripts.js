@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
   const url = 'https://api.nasa.gov/planetary/apod?';
   const apiKey = 'api_key=ZyAZ65TRjYZ4Sto72jlrgtOieAXPJuVymJFrf0RS';
   let imageCount = 1;
+  let resultsArray = [];
 
   Date.prototype.toDateInputValue = function() {
     var local = new Date(this);
@@ -19,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
   document.getElementById('date-selector').value = new Date().toDateInputValue();
 
   //Events
-  document.getElementById('next-page').click(function() {
+  document.getElementById('next-page').addEventListener('click', function() {
     if (dateSelector.value == todaysDate) {
       alert('you are viewing the most recent pictures');
     } else {
@@ -28,12 +29,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }
   });
 
-  document.getElementById('previous-page').click(function() {
+  document.getElementById('previous-page').addEventListener('click', function() {
     dateSelector.value = incDecDate(-1, dateSelector.value);
     displayArticles();
   });
 
-  document.getElementById('show-articles').click(function() {
+  document.getElementById('show-articles').addEventListener('click', function() {
     displayArticles();
   });
 
@@ -72,34 +73,42 @@ document.addEventListener('DOMContentLoaded', function(event) {
   }
 
   function displayArticles() {
-    //First clear previous article element clones if any are present...
     clearPrevious();
-    // let currentDate = 'date=' + dateSelector.value;
+    imageCount = 1;
     let dateArray = createDateArray();
-    console.log(dateArray);
-
-    // dateArray.forEach(date => getRemoteData(date));
-    for (let index = 0; index < dateArray.length; index++) {
-      const date = dateArray[index];
-      getRemoteData(date);
-    }
+    addRemoteDataToArray(dateArray, resultsArray);
+    setTimeout(() => {
+      resultsArray = resultsArray.reverse();
+      resultsArray.forEach(element => {
+        createNewElements(element);
+      });
+    }, 1000);
   }
 
-  //   const request = async () => {
-  //     const response = await fetch(url + apiKey + '&date=' + date, {});
-  //     console.log(response);
+  function addRemoteDataToArray(dateArray, resultsArray) {
+    for (let index = 0; index < dateArray.length; index++) {
+      const date = dateArray[index];
+      fetch(url + apiKey + '&date=' + date).then(response =>
+        response.json().then(function(data) {
+          resultsArray[index] = data;
+        })
+      );
+    }
+    console.log(resultsArray);
+  }
+  // function getRemoteData(date) {
+  //   fetch(url + apiKey + '&date=' + date, {})
+  //     .then(response => response.json())
+  //     .then(function(data) {
+  //       createNewElements(data);
+  //     });
+  // }
 
-  //     //   .then(response => response.json())
-  //     //   .then(function(data) {
-  //     //     createNewElements(data);
-  //     //   });
-  //   };
-  function getRemoteData(date) {
-    fetch(url + apiKey + '&date=' + date, {})
-      .then(response => response.json())
-      .then(function(data) {
-        createNewElements(data);
-      });
+  function assemble() {
+    resultsArray.forEach(element => {
+      createNewElements(element);
+      console.log(element);
+    });
   }
 
   function createNewElements(data) {

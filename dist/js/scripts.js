@@ -1,6 +1,6 @@
 'use strict';
 
-document.addEventListener('DOMContentLoaded', function(event) {
+document.addEventListener('DOMContentLoaded', function (event) {
   console.log('DOM fully loaded and parsed'); // variables
 
   var dateSelector = document.querySelector('#date-selector');
@@ -10,8 +10,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
   var url = 'https://api.nasa.gov/planetary/apod?';
   var apiKey = 'api_key=ZyAZ65TRjYZ4Sto72jlrgtOieAXPJuVymJFrf0RS';
   var imageCount = 1;
+  var resultsArray = [];
 
-  Date.prototype.toDateInputValue = function() {
+  Date.prototype.toDateInputValue = function () {
     var local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
     return local.toJSON().slice(0, 10);
@@ -19,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
   document.getElementById('date-selector').value = new Date().toDateInputValue(); //Events
 
-  document.getElementById('next-page').click(function() {
+  document.getElementById('next-page').addEventListener('click', function () {
     if (dateSelector.value == todaysDate) {
       alert('you are viewing the most recent pictures');
     } else {
@@ -27,11 +28,11 @@ document.addEventListener('DOMContentLoaded', function(event) {
       displayArticles();
     }
   });
-  document.getElementById('previous-page').click(function() {
+  document.getElementById('previous-page').addEventListener('click', function () {
     dateSelector.value = incDecDate(-1, dateSelector.value);
     displayArticles();
   });
-  document.getElementById('show-articles').click(function() {
+  document.getElementById('show-articles').addEventListener('click', function () {
     displayArticles();
   });
   displayArticles(); // functions
@@ -39,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
   function clearPrevious() {
     if (document.querySelectorAll('article').length > 0) {
       var elems = document.querySelectorAll('article');
-      elems.forEach(function(element) {
+      elems.forEach(function (element) {
         element.remove();
       });
     }
@@ -70,50 +71,51 @@ document.addEventListener('DOMContentLoaded', function(event) {
   }
 
   function displayArticles() {
-    //First clear previous article element clones if any are present...
-    clearPrevious(); // let currentDate = 'date=' + dateSelector.value;
-
+    clearPrevious();
+    imageCount = 1;
     var dateArray = createDateArray();
-    console.log(dateArray); // dateArray.forEach(date => getRemoteData(date));
+    addRemoteDataToArray(dateArray, resultsArray);
+    setTimeout(function () {
+      resultsArray = resultsArray.reverse();
+      resultsArray.forEach(function (element) {
+        createNewElements(element);
+      });
+    }, 1000);
+  }
+
+  function addRemoteDataToArray(dateArray, resultsArray) {
+    var _loop = function _loop(index) {
+      var date = dateArray[index];
+      fetch(url + apiKey + '&date=' + date).then(function (response) {
+        return response.json().then(function (data) {
+          resultsArray[index] = data;
+        });
+      });
+    };
 
     for (var index = 0; index < dateArray.length; index++) {
-      var date = dateArray[index];
-      getRemoteData(date);
+      _loop(index);
     }
-  } //   const request = async () => {
-  //     const response = await fetch(url + apiKey + '&date=' + date, {});
-  //     console.log(response);
-  //     //   .then(response => response.json())
-  //     //   .then(function(data) {
-  //     //     createNewElements(data);
-  //     //   });
-  //   };
 
-  function getRemoteData(date) {
-    fetch(url + apiKey + '&date=' + date, {})
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        createNewElements(data);
-      });
+    console.log(resultsArray);
+  } // function getRemoteData(date) {
+  //   fetch(url + apiKey + '&date=' + date, {})
+  //     .then(response => response.json())
+  //     .then(function(data) {
+  //       createNewElements(data);
+  //     });
+  // }
+
+
+  function assemble() {
+    resultsArray.forEach(function (element) {
+      createNewElements(element);
+      console.log(element);
+    });
   }
 
   function createNewElements(data) {
-    gridArea.insertAdjacentHTML(
-      'beforeend',
-      '<article id="article' +
-        imageCount +
-        '" class="article"><a target="_blank" id="image-link' +
-        imageCount +
-        '" data-fancybox="gallery" class="image-link"><img id="img' +
-        imageCount +
-        '" src="" class="images"></a><a target="_blank" id="title-link' +
-        imageCount +
-        '" class=""title-link><h5 id="title' +
-        imageCount +
-        '" class="title"></h5></a></article>'
-    );
+    gridArea.insertAdjacentHTML('beforeend', '<article id="article' + imageCount + '" class="article"><a target="_blank" id="image-link' + imageCount + '" data-fancybox="gallery" class="image-link"><img id="img' + imageCount + '" src="" class="images"></a><a target="_blank" id="title-link' + imageCount + '" class=""title-link><h5 id="title' + imageCount + '" class="title"></h5></a></article>');
     var postUrl = data.hdurl;
     var articleTitleContent = data.title;
     var articleImageContent = data.url;
@@ -130,9 +132,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     if (articleImageContent != null) {
       articleImageArea.setAttribute('src', articleImageContent);
     } else {
-      articleImageArea
-        .setAttribute('style', placeHolderImageAreaDimensions)
-        .setAttribute('src', placeHolderImage);
+      articleImageArea.setAttribute('style', placeHolderImageAreaDimensions).setAttribute('src', placeHolderImage);
     }
 
     imageCount++;
