@@ -55,6 +55,9 @@ input {
   grid-template-columns: 1fr 1fr;
   padding: 10px;
 }
+.controls {
+  max-width: 350px;
+}
 .nasa-logo {
   max-width: 450px;
   margin: auto;
