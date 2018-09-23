@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     let postUrl = data.hdurl;
     let articleTitleContent = data.title;
     let articleImageContent = data.url;
-    let placeHolderImage = 'space.jpg';
+    let placeHolderImage = '/images/space.jpg';
     let placeHolderImageAreaDimensions = "width: '25%', 'margin-top': '15px'";
     let imageLink = document.querySelector('#image-link' + imageCount);
     let titleLink = document.querySelector('#title-link' + imageCount);
