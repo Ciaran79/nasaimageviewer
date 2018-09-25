@@ -1,25 +1,20 @@
 html {
-  font-size: 62.5%;
-}
+  font-size: 62.5%; }
 
 body {
   font-family: "Open Sans", sans-serif;
   background-color: #0e0e0e;
-  color: white;
-}
+  color: white; }
 
 h1 {
-  font-size: 3.5rem;
-}
+  font-size: 3.5rem; }
 
 h5 {
   font-weight: 800;
-  font-size: 1.5rem;
-}
+  font-size: 1.5rem; }
 
 p {
-  font-size: 2.4rem;
-}
+  font-size: 2.4rem; }
 
 button {
   margin-top: 10px;
@@ -29,27 +24,22 @@ button {
   padding: 5px 20px;
   border-radius: 5px;
   border: none;
-  transition: background-color 0.3s;
-}
+  transition: background-color 0.3s; }
 
 button:hover {
   background-color: #4bbdc5;
-  cursor: pointer;
-}
+  cursor: pointer; }
 
 label {
-  font-size: 1.6rem;
-}
+  font-size: 1.6rem; }
 
 input {
-  font-size: 1.6rem;
-}
+  font-size: 1.6rem; }
 
 #content {
   background-color: black;
   margin: auto;
-  height: 100vh;
-}
+  height: 100vh; }
 
 #user-interface {
   max-width: 1100px;
@@ -57,42 +47,35 @@ input {
   margin: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 10px;
-}
+  padding: 10px; }
 
 .controls {
-  max-width: 350px;
-}
+  max-width: 400px; }
 
 .nasa-logo {
   max-width: 450px;
   margin: auto;
-  display: flex;
-}
+  display: flex; }
 
 #app-title {
   grid-area: 1/1/-1/2;
-  text-transform: uppercase;
-}
+  text-transform: uppercase; }
 
 .input-container {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-}
+  flex-wrap: wrap; }
 
 .button-container {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-}
+  flex-wrap: wrap; }
 
 #image-grid-area {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
   grid-gap: 2rem;
-  padding: 2rem;
-}
+  padding: 2rem; }
 
 article {
   background-color: white;
@@ -101,33 +84,27 @@ article {
   display: flex;
   flex-direction: column;
   opacity: 0;
-  transition: all 1s;
-}
+  transition: all 1s; }
 
 .show {
-  opacity: 1;
-}
+  opacity: 1; }
 
 .title {
   padding: 0.8em 1.5em 0.8em 1.5em;
   text-shadow: 0.5px 0.5px 0.2px #00000085;
-  margin: 0;
-}
+  margin: 0; }
 
 a {
   color: #575757;
   transition: all 0.25s;
-  text-align: center;
-}
+  text-align: center; }
 
 a:hover {
-  color: #f32373;
-}
+  color: #f32373; }
 
 img {
   width: 100%;
   height: 300px;
-  object-fit: cover;
-}
+  object-fit: cover; }
 
 /*# sourceMappingURL=style.css.map */

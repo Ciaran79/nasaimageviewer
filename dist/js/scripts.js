@@ -1,16 +1,7 @@
 'use strict';
 
-document.addEventListener('DOMContentLoaded', function (event) {
-  console.log('DOM fully loaded and parsed'); // variables
-
-  var dateSelector = document.querySelector('#date-selector');
-  var todaysDate = dateSelector.value;
-  var gridArea = document.querySelector('#image-grid-area');
-  var articleNumber = document.querySelector('#article-number');
-  var url = 'https://api.nasa.gov/planetary/apod?';
-  var apiKey = 'api_key=ZyAZ65TRjYZ4Sto72jlrgtOieAXPJuVymJFrf0RS';
-  var imageCount = 1;
-  var resultsArray = [];
+document.addEventListener('DOMContentLoaded', function () {
+  console.log('DOM fully loaded and parsed');
 
   Date.prototype.toDateInputValue = function () {
     var local = new Date(this);
@@ -18,13 +9,23 @@ document.addEventListener('DOMContentLoaded', function (event) {
     return local.toJSON().slice(0, 10);
   };
 
-  document.getElementById('date-selector').value = new Date().toDateInputValue(); //Events
+  document.getElementById('date-selector').value = new Date().toDateInputValue(); // variables
+
+  var dateSelector = document.getElementById('date-selector');
+  var todaysDate = dateSelector.value;
+  var currentDate = dateSelector.value;
+  var gridArea = document.querySelector('#image-grid-area');
+  var articleNumber = document.querySelector('#article-number');
+  var url = 'https://api.nasa.gov/planetary/apod?';
+  var apiKey = 'api_key=ZyAZ65TRjYZ4Sto72jlrgtOieAXPJuVymJFrf0RS';
+  var imageCount = 1;
+  var resultsArray = []; //Events
 
   document.getElementById('next-page').addEventListener('click', function () {
-    if (dateSelector.value == todaysDate) {
+    if (currentDate == todaysDate) {
       alert('you are viewing the most recent pictures');
     } else {
-      dateSelector.value = incDecDate(1, dateSelector.value);
+      currentDate = incDecDate(1, currentDate);
       displayArticles();
     }
   });
@@ -35,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
   document.getElementById('show-articles').addEventListener('click', function () {
     displayArticles();
   });
-  displayArticles(showArticles); // functions
+  displayArticles(); // functions
 
   function clearPrevious() {
     if (document.querySelectorAll('article').length > 0) {
@@ -74,13 +75,12 @@ document.addEventListener('DOMContentLoaded', function (event) {
     clearPrevious();
     imageCount = 1;
     var dateArray = createDateArray();
-    addRemoteDataToArray(dateArray, resultsArray);
-    setTimeout(function () {
-      resultsArray = resultsArray.reverse();
-      resultsArray.forEach(function (element) {
-        createNewElements(element);
-      });
-    }, 1000);
+    resultsArray = addRemoteDataToArray(dateArray);
+    resultsArray = resultsArray.reverse();
+    console.log(resultsArray);
+    resultsArray.forEach(function (element) {
+      createNewElements(element);
+    });
     setTimeout(function () {
       showArticles();
     }, 1200);
@@ -92,12 +92,14 @@ document.addEventListener('DOMContentLoaded', function (event) {
     });
   }
 
-  function addRemoteDataToArray(dateArray, resultsArray) {
+  function addRemoteDataToArray(dateArray) {
+    var results = [];
+
     var _loop = function _loop(index) {
       var date = dateArray[index];
       fetch(url + apiKey + '&date=' + date).then(function (response) {
         return response.json().then(function (data) {
-          resultsArray[index] = data;
+          results[index] = data;
         });
       });
     };
@@ -106,14 +108,10 @@ document.addEventListener('DOMContentLoaded', function (event) {
       _loop(index);
     }
 
-    console.log(resultsArray);
-  } // function getRemoteData(date) {
-  //   fetch(url + apiKey + '&date=' + date, {})
-  //     .then(response => response.json())
-  //     .then(function(data) {
-  //       createNewElements(data);
-  //     });
-  // }
+    return results;
+  } // function getRemoteData(date) {   fetch(url + apiKey + '&date=' + date, {})
+  // .then(response => response.json())     .then(function(data) {
+  // createNewElements(data);     }); }
 
 
   function assemble() {

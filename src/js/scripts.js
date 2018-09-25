@@ -1,10 +1,23 @@
 'use strict';
 
-document.addEventListener('DOMContentLoaded', function(event) {
+document.addEventListener('DOMContentLoaded', function () {
   console.log('DOM fully loaded and parsed');
+
+  Date.prototype.toDateInputValue = function () {
+    let local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local
+      .toJSON()
+      .slice(0, 10);
+  };
+  document
+    .getElementById('date-selector')
+    .value = new Date().toDateInputValue();
+
   // variables
-  const dateSelector = document.querySelector('#date-selector');
+  const dateSelector = document.getElementById('date-selector');
   const todaysDate = dateSelector.value;
+  let currentDate = dateSelector.value;
   const gridArea = document.querySelector('#image-grid-area');
   const articleNumber = document.querySelector('#article-number');
   const url = 'https://api.nasa.gov/planetary/apod?';
@@ -12,33 +25,32 @@ document.addEventListener('DOMContentLoaded', function(event) {
   let imageCount = 1;
   let resultsArray = [];
 
-  Date.prototype.toDateInputValue = function() {
-    var local = new Date(this);
-    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-    return local.toJSON().slice(0, 10);
-  };
-  document.getElementById('date-selector').value = new Date().toDateInputValue();
-
   //Events
-  document.getElementById('next-page').addEventListener('click', function() {
-    if (dateSelector.value == todaysDate) {
-      alert('you are viewing the most recent pictures');
-    } else {
-      dateSelector.value = incDecDate(1, dateSelector.value);
+  document
+    .getElementById('next-page')
+    .addEventListener('click', function () {
+      if (currentDate == todaysDate) {
+        alert('you are viewing the most recent pictures');
+      } else {
+        currentDate = incDecDate(1, currentDate);
+        displayArticles();
+      }
+    });
+
+  document
+    .getElementById('previous-page')
+    .addEventListener('click', function () {
+      dateSelector.value = incDecDate(-1, dateSelector.value);
       displayArticles();
-    }
-  });
+    });
 
-  document.getElementById('previous-page').addEventListener('click', function() {
-    dateSelector.value = incDecDate(-1, dateSelector.value);
-    displayArticles();
-  });
+  document
+    .getElementById('show-articles')
+    .addEventListener('click', function () {
+      displayArticles();
+    });
 
-  document.getElementById('show-articles').addEventListener('click', function() {
-    displayArticles();
-  });
-
-  displayArticles(showArticles);
+  displayArticles();
 
   // functions
   function clearPrevious() {
@@ -53,7 +65,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
   function incDecDate(incDec, date) {
     let result = new Date(date);
     result.setDate(result.getDate() + incDec);
-    result = result.toISOString().slice(0, 10);
+    result = result
+      .toISOString()
+      .slice(0, 10);
     return result;
   }
 
@@ -76,13 +90,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
     clearPrevious();
     imageCount = 1;
     let dateArray = createDateArray();
-    addRemoteDataToArray(dateArray, resultsArray);
-    setTimeout(() => {
-      resultsArray = resultsArray.reverse();
-      resultsArray.forEach(element => {
-        createNewElements(element);
-      });
-    }, 1000);
+    resultsArray = addRemoteDataToArray(dateArray);
+    resultsArray = resultsArray.reverse();
+    console.log(resultsArray);
+    resultsArray.forEach(element => {
+      createNewElements(element);
+    });
     setTimeout(() => {
       showArticles();
     }, 1200);
@@ -94,24 +107,19 @@ document.addEventListener('DOMContentLoaded', function(event) {
       .forEach(element => element.classList.add('show'));
   }
 
-  function addRemoteDataToArray(dateArray, resultsArray) {
+  function addRemoteDataToArray(dateArray) {
+    let results = [];
     for (let index = 0; index < dateArray.length; index++) {
       const date = dateArray[index];
-      fetch(url + apiKey + '&date=' + date).then(response =>
-        response.json().then(function(data) {
-          resultsArray[index] = data;
-        })
-      );
+      fetch(url + apiKey + '&date=' + date).then(response => response.json().then(function (data) {
+        results[index] = data;
+      }));
     }
-    console.log(resultsArray);
+    return results;
   }
-  // function getRemoteData(date) {
-  //   fetch(url + apiKey + '&date=' + date, {})
-  //     .then(response => response.json())
-  //     .then(function(data) {
-  //       createNewElements(data);
-  //     });
-  // }
+  // function getRemoteData(date) {   fetch(url + apiKey + '&date=' + date, {})
+  // .then(response => response.json())     .then(function(data) {
+  // createNewElements(data);     }); }
 
   function assemble() {
     resultsArray.forEach(element => {
@@ -121,20 +129,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
   }
 
   function createNewElements(data) {
-    gridArea.insertAdjacentHTML(
-      'beforeend',
-      '<article id="article' +
-        imageCount +
-        '" class="article"><a target="_blank" id="image-link' +
-        imageCount +
-        '" data-fancybox="gallery" class="image-link"><img id="img' +
-        imageCount +
-        '" src="" class="images"></a><a target="_blank" id="title-link' +
-        imageCount +
-        '" class=""title-link><h5 id="title' +
-        imageCount +
-        '" class="title"></h5></a></article>'
-    );
+    gridArea.insertAdjacentHTML('beforeend', '<article id="article' + imageCount + '" class="article"><a target="_blank" id="image-link' + imageCount + '" data-fancybox="gallery" class="image-link"><img id="img' + imageCount + '" src="" class="images"></a><a target="_blank" id="title-link' + imageCount + '" class=""title-link><h5 id="title' + imageCount + '" class="title"></h5></a></article>');
 
     let postUrl = data.hdurl;
     let articleTitleContent = data.title;
