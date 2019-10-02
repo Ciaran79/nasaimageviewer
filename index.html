@@ -1,45 +1,57 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,800"
+      rel="stylesheet"
+    />
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
-    <link rel="stylesheet" href="dist/css/style.css">
+    <link rel="stylesheet" href="dist/css/style.css" />
     <title>Nasa image of the day</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <main id="content">
-        <div id="user-interface" class="text-center">
-            <h1 id="app-title">Nasa image of the day</h1>
-            <div class="controls">
-                <div class="input-container">
-                    <div class="">
-                        <label>Images to show:
-                            <input type="number" id="article-number" value="2" min="1" max="10" maxlength="1">
-                        </label>
-                    </div>
-                    <div class="">
-                        <label>Date:
-                            <input type="date" id="date-selector">
-                        </label>
-                    </div>
-                </div>
-                <div class="button-container">
-                    <button type="button" id="previous-page" class="">Older</button>
-                    <button type="button" id="show-articles" class="">Show Images</button>
-                    <button type="button" id="next-page" class="">Newer</button>
-                </div>
+      <div id="user-interface" class="text-center">
+        <h1 id="app-title">Nasa image of the day</h1>
+        <div class="controls">
+          <div class="input-container">
+            <div class="">
+              <label
+                >Images to show:
+                <input
+                  type="number"
+                  id="article-number"
+                  value="2"
+                  min="1"
+                  max="10"
+                  maxlength="1"
+                />
+              </label>
             </div>
+            <div class="">
+              <label
+                >Date:
+                <input type="date" id="date-selector" />
+              </label>
+            </div>
+          </div>
+          <div class="button-container">
+            <button type="button" id="previous-page" class="">Older</button>
+            <button type="button" id="show-articles" class="">Show Images</button>
+            <button type="button" id="next-page" class="">Newer</button>
+          </div>
         </div>
-        <div id="image-grid-area">
-        </div>
+      </div>
+      <div id="image-grid-area"></div>
     </main>
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
     <script src="src/js/scripts.js"></script>
-</body>
-
+  </body>
 </html>
