@@ -1,8 +1,6 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function () {
-  console.log('DOM fully loaded and parsed');
-
   Date.prototype.toDateInputValue = function () {
     const local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
@@ -85,10 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
     imageCount = 1;
     let dateArray = createDateArray();
     resultsArray = await addRemoteDataToArray(dateArray);
-    console.log(
-      '🚀 ~ file: scripts.js ~ line 94 ~ displayArticles ~ resultsArray',
-      resultsArray
-    );
     resultsArray = resultsArray.reverse();
     resultsArray.forEach((element) => {
       createNewElements(element);
@@ -124,19 +118,17 @@ document.addEventListener('DOMContentLoaded', function () {
   function assemble() {
     resultsArray.forEach((element) => {
       createNewElements(element);
-      console.log('assemble', element);
     });
   }
 
   function createNewElements(data) {
-    console.log('called create new');
     gridArea.insertAdjacentHTML(
       'beforeend',
       '<article id="article' +
         imageCount +
         '" class="article"><a target="_blank" id="image-link' +
         imageCount +
-        '" data-fancybox="gallery" class="image-link"><img id="img' +
+        '" class="image-link"><img id="img' +
         imageCount +
         '" src="" loading="lazy" class="images"></a><a target="_blank" id="title-link' +
         imageCount +
