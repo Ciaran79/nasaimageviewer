@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
         imageCount +
         '" data-fancybox="gallery" class="image-link"><img id="img' +
         imageCount +
-        '" src="" class="images"></a><a target="_blank" id="title-link' +
+        '" src="" loading="lazy" class="images"></a><a target="_blank" id="title-link' +
         imageCount +
         '" class=""title-link><h5 id="title' +
         imageCount +
