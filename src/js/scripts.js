@@ -6,13 +6,11 @@ document.addEventListener('DOMContentLoaded', function () {
   Date.prototype.toDateInputValue = function () {
     let local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-    return local
-      .toJSON()
-      .slice(0, 10);
+    return local.toJSON().slice(0, 10);
   };
-  document
-    .getElementById('date-selector')
-    .value = new Date().toDateInputValue();
+  document.getElementById(
+    'date-selector'
+  ).value = new Date().toDateInputValue();
 
   // variables
   const dateSelector = document.getElementById('date-selector');
@@ -26,16 +24,14 @@ document.addEventListener('DOMContentLoaded', function () {
   let resultsArray = [];
 
   //Events
-  document
-    .getElementById('next-page')
-    .addEventListener('click', function () {
-      if (currentDate == todaysDate) {
-        alert('you are viewing the most recent pictures');
-      } else {
-        currentDate = incDecDate(1, currentDate);
-        displayArticles();
-      }
-    });
+  document.getElementById('next-page').addEventListener('click', function () {
+    if (currentDate == todaysDate) {
+      alert('you are viewing the most recent pictures');
+    } else {
+      currentDate = incDecDate(1, currentDate);
+      displayArticles();
+    }
+  });
 
   document
     .getElementById('previous-page')
@@ -56,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function clearPrevious() {
     if (document.querySelectorAll('article').length > 0) {
       var elems = document.querySelectorAll('article');
-      elems.forEach(element => {
+      elems.forEach((element) => {
         element.remove();
       });
     }
@@ -65,9 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function incDecDate(incDec, date) {
     let result = new Date(date);
     result.setDate(result.getDate() + incDec);
-    result = result
-      .toISOString()
-      .slice(0, 10);
+    result = result.toISOString().slice(0, 10);
     return result;
   }
 
@@ -91,35 +85,44 @@ document.addEventListener('DOMContentLoaded', function () {
     imageCount = 1;
     let dateArray = createDateArray();
     resultsArray = await addRemoteDataToArray(dateArray);
-    console.log("🚀 ~ file: scripts.js ~ line 94 ~ displayArticles ~ resultsArray", resultsArray)
+    console.log(
+      '🚀 ~ file: scripts.js ~ line 94 ~ displayArticles ~ resultsArray',
+      resultsArray
+    );
     resultsArray = resultsArray.reverse();
-    resultsArray.forEach(element => {
+    resultsArray.forEach((element) => {
       createNewElements(element);
     });
     showArticles();
   }
 
   function showArticles() {
-    document
-      .querySelectorAll('article')
-      .forEach(element => element.classList.add('show'));
+    document.querySelectorAll('article').forEach((element) => {
+      if (element.querySelector('img')) {
+        element.querySelector('img').addEventListener('load', () => {
+          element.classList.add('show');
+        });
+      }
+    });
   }
 
   async function addRemoteDataToArray(dateArray) {
     let results = [];
     for (let index = 0; index < dateArray.length; index++) {
       const date = dateArray[index];
-      await fetch(url + apiKey + '&date=' + date).then(response => response.json().then(function (data) {
-        results[index] = data;
-      }));
+      await fetch(url + apiKey + '&date=' + date).then((response) =>
+        response.json().then(function (data) {
+          results[index] = data;
+        })
+      );
     }
-    return new Promise(resolve =>{
+    return new Promise((resolve) => {
       resolve(results);
     });
   }
 
   function assemble() {
-    resultsArray.forEach(element => {
+    resultsArray.forEach((element) => {
       createNewElements(element);
       console.log('assemble', element);
     });
@@ -127,7 +130,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function createNewElements(data) {
     console.log('called create new');
-    gridArea.insertAdjacentHTML('beforeend', '<article id="article' + imageCount + '" class="article"><a target="_blank" id="image-link' + imageCount + '" data-fancybox="gallery" class="image-link"><img id="img' + imageCount + '" src="" class="images"></a><a target="_blank" id="title-link' + imageCount + '" class=""title-link><h5 id="title' + imageCount + '" class="title"></h5></a></article>');
+    gridArea.insertAdjacentHTML(
+      'beforeend',
+      '<article id="article' +
+        imageCount +
+        '" class="article"><a target="_blank" id="image-link' +
+        imageCount +
+        '" data-fancybox="gallery" class="image-link"><img id="img' +
+        imageCount +
+        '" src="" class="images"></a><a target="_blank" id="title-link' +
+        imageCount +
+        '" class=""title-link><h5 id="title' +
+        imageCount +
+        '" class="title"></h5></a></article>'
+    );
 
     let postUrl = data.hdurl;
     let articleTitleContent = data.title;
