@@ -23,24 +23,6 @@ module.exports = function (grunt) {
         dest: 'dist/css/style.css',
       },
     },
-    babel: {
-      options: {
-        sourceMap: true,
-        presets: [
-          [
-            '@babel/preset-env',
-            {
-              // useBuiltIns: "entry",
-            },
-          ],
-        ],
-      },
-      dist: {
-        files: {
-          'dist/js/scripts.js': 'src/js/scripts.js',
-        },
-      },
-    },
     watch: {
       scripts: {
         files: ['src/scss/style.scss', 'src/js/scripts.js'],
@@ -62,8 +44,9 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-babel');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   // Default task(s).
-  grunt.registerTask('default', ['sass', 'postcss', 'babel']);
-  grunt.registerTask('build', ['sass', 'postcss', 'babel']);
+  grunt.registerTask('default', ['sass', 'postcss']);
+  grunt.registerTask('build', ['sass', 'postcss']);
 };

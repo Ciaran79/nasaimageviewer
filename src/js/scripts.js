@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
   console.log('DOM fully loaded and parsed');
 
   Date.prototype.toDateInputValue = function () {
-    let local = new Date(this);
+    const local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
     return local.toJSON().slice(0, 10);
   };
