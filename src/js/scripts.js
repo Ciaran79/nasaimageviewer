@@ -86,19 +86,17 @@ document.addEventListener('DOMContentLoaded', function () {
     return dates;
   }
 
-  function displayArticles() {
+  async function displayArticles() {
     clearPrevious();
     imageCount = 1;
     let dateArray = createDateArray();
-    resultsArray = addRemoteDataToArray(dateArray);
+    resultsArray = await addRemoteDataToArray(dateArray);
+    console.log("🚀 ~ file: scripts.js ~ line 94 ~ displayArticles ~ resultsArray", resultsArray)
     resultsArray = resultsArray.reverse();
-    console.log(resultsArray);
     resultsArray.forEach(element => {
       createNewElements(element);
     });
-    setTimeout(() => {
-      showArticles();
-    }, 1200);
+    showArticles();
   }
 
   function showArticles() {
@@ -107,28 +105,28 @@ document.addEventListener('DOMContentLoaded', function () {
       .forEach(element => element.classList.add('show'));
   }
 
-  function addRemoteDataToArray(dateArray) {
+  async function addRemoteDataToArray(dateArray) {
     let results = [];
     for (let index = 0; index < dateArray.length; index++) {
       const date = dateArray[index];
-      fetch(url + apiKey + '&date=' + date).then(response => response.json().then(function (data) {
+      await fetch(url + apiKey + '&date=' + date).then(response => response.json().then(function (data) {
         results[index] = data;
       }));
     }
-    return results;
+    return new Promise(resolve =>{
+      resolve(results);
+    });
   }
-  // function getRemoteData(date) {   fetch(url + apiKey + '&date=' + date, {})
-  // .then(response => response.json())     .then(function(data) {
-  // createNewElements(data);     }); }
 
   function assemble() {
     resultsArray.forEach(element => {
       createNewElements(element);
-      console.log(element);
+      console.log('assemble', element);
     });
   }
 
   function createNewElements(data) {
+    console.log('called create new');
     gridArea.insertAdjacentHTML('beforeend', '<article id="article' + imageCount + '" class="article"><a target="_blank" id="image-link' + imageCount + '" data-fancybox="gallery" class="image-link"><img id="img' + imageCount + '" src="" class="images"></a><a target="_blank" id="title-link' + imageCount + '" class=""title-link><h5 id="title' + imageCount + '" class="title"></h5></a></article>');
 
     let postUrl = data.hdurl;
