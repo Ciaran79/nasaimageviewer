@@ -1,4 +1,4 @@
-'use strict';
+require('./main.scss');
 
 document.addEventListener('DOMContentLoaded', function () {
   Date.prototype.toDateInputValue = function () {
