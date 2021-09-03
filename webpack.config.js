@@ -15,7 +15,7 @@ module.exports = {
  },
    plugins: [
      new HtmlWebpackPlugin({
-       title: 'Nasa Image Viewer',
+      title: 'Nasa Image Viewer',
       template: 'src/index.html'
      }),
      new CopyPlugin({
