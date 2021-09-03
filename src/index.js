@@ -1,4 +1,4 @@
-require('./main.scss');
+require('./scss/main.scss');
 
 document.addEventListener('DOMContentLoaded', function () {
   Date.prototype.toDateInputValue = function () {
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
       'beforeend',
       '<article id="article' +
         imageCount +
-        '" class="article"><a target="_blank" id="image-link' +
+        '" class="article"><div class="spinner lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><a target="_blank" id="image-link' +
         imageCount +
         '" class="image-link"><img id="img' +
         imageCount +

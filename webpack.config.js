@@ -1,5 +1,8 @@
  const path = require('path');
  const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
+ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 module.exports = {
     mode: 'development',
     entry: {
@@ -12,9 +15,15 @@ module.exports = {
  },
    plugins: [
      new HtmlWebpackPlugin({
-       title: 'Development',
+       title: 'Nasa Image Viewer',
       template: 'src/index.html'
      }),
+     new CopyPlugin({
+      patterns: [
+        { from: "images", to: "images" },
+      ],
+    }),
+    new MiniCssExtractPlugin(),
    ],
    output: {
      filename: '[name].bundle.js',
@@ -26,16 +35,20 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          "style-loader",
+          // "style-loader",
+          MiniCssExtractPlugin.loader,
           "css-loader",
           {
             loader: "sass-loader",
             options: {
-              // Prefer `dart-sass`
               implementation: require("sass"),
             },
           },
         ],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
       },
     ],
   },
