@@ -1,56 +1,54 @@
+@use './spinner.scss';
+
+//Variables
+$bodyFont: 'Open Sans', sans-serif;
+$textColor: white;
+$niceBlue: #81f6ff;
+$hoverBlue: #4bbdc5;
+
 html {
   font-size: 62.5%;
 }
-
 body {
-  font-family: "Open Sans", sans-serif;
-  background-color: #0e0e0e;
-  color: white;
+  font-family: $bodyFont;
+  background-color: rgb(14, 14, 14);
+  color: $textColor;
 }
-
 h1 {
   font-size: 3.5rem;
 }
-
 h5 {
   font-weight: 800;
   font-size: 1.5rem;
 }
-
 p {
   font-size: 2.4rem;
 }
-
 button {
   margin-top: 10px;
   font-size: 1.6rem;
-  background-color: #81f6ff;
-  border-color: #81f6ff;
+  background-color: $niceBlue;
+  border-color: $niceBlue;
   padding: 5px 20px;
   border-radius: 5px;
   border: none;
   transition: background-color 0.3s;
 }
-
 button:hover {
-  background-color: #4bbdc5;
+  background-color: $hoverBlue;
   cursor: pointer;
 }
-
 label {
   font-size: 1.6rem;
 }
-
 input {
   font-size: 1.6rem;
 }
-
 #content {
   background-color: black;
   margin: auto;
   height: 100vh;
 }
-
 #user-interface {
   max-width: 1100px;
   width: 90%;
@@ -59,28 +57,23 @@ input {
   grid-template-columns: 1fr 1fr;
   padding: 10px;
 }
-
 .controls {
   max-width: 400px;
 }
-
 .nasa-logo {
   max-width: 450px;
   margin: auto;
   display: flex;
 }
-
 #app-title {
   grid-area: 1/1/-1/2;
   text-transform: uppercase;
 }
-
 .input-container {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
-
 .button-container {
   display: flex;
   justify-content: space-between;
@@ -90,44 +83,64 @@ input {
 #image-grid-area {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-  grid-gap: 2rem;
+  gap: 2rem;
   padding: 2rem;
 }
 
+//The Images
+
 article {
-  background-color: white;
+  background-color: black;
   font-weight: bold;
   box-shadow: 0 1px 8px 1px rgba(61, 61, 61, 0.479);
-  display: flex;
-  flex-direction: column;
-  opacity: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
   transition: all 1s;
+  position: relative;
 }
-
 .show {
   opacity: 1;
 }
-
 .title {
-  padding: 0.8em 1.5em 0.8em 1.5em;
+  padding: 10px;
   text-shadow: 0.5px 0.5px 0.2px #00000085;
   margin: 0;
+  background-color: white;
+  box-sizing: border-box;
+  height: 100%;
 }
-
 a {
-  color: #575757;
+  color: rgb(87, 87, 87);
   transition: all 0.25s;
   text-align: center;
 }
-
 a:hover {
-  color: #f32373;
+  color: rgb(243, 35, 115);
 }
-
 img {
   width: 100%;
   height: 300px;
   object-fit: cover;
+  display: block;
 }
 
-/*# sourceMappingURL=style.css.map */
+.spinner {
+  position: absolute;
+  place-self: center;
+  .show & {
+    display: none;
+  }
+}
+
+.title-link {
+  opacity: 0;
+  .show & {
+    opacity: 1;
+  }
+}
+.image-link {
+  opacity: 0;
+  .show & {
+    opacity: 1;
+  }
+}

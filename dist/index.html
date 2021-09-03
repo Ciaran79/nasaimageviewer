@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet"/>
+		<title>Development</title>
+
+	<script defer src="index.bundle.js"></script><link href="index.css" rel="stylesheet"></head>
+
+	<body>
+		<main id="content">
+			<div id="user-interface" class="text-center">
+				<h1 id="app-title">Nasa image of the day</h1>
+				<div class="controls">
+					<div class="input-container">
+						<div class="">
+							<label>Images to show:
+								<input type="number" id="article-number" value="4" min="1" max="10" maxlength="1"/>
+							</label>
+						</div>
+						<div class="">
+							<label>Date:
+								<input type="date" id="date-selector"/>
+							</label>
+						</div>
+					</div>
+					<div class="button-container">
+						<button type="button" id="previous-page" class="">Older</button>
+						<button type="button" id="show-articles" class="">
+							Show Images
+						</button>
+						<button type="button" id="next-page" class="">Newer</button>
+					</div>
+				</div>
+			</div>
+			<div id="image-grid-area"></div>
+		</main>
+	</body>
+</html>
