@@ -2,11 +2,18 @@ const url = import.meta.env.VITE_URL;
 const apiKey = import.meta.env.VITE_API_KEY;
 
 export async function getRemoteData(dateArray) {
-  return await fetch(
+  const fullurl =
     url +
-      apiKey +
-      `&start_date=${dateArray[0]}&end_date=${dateArray[dateArray.length - 1]}`
-  ).then((response) => response.json());
+    apiKey +
+    `&start_date=${dateArray[0]}&end_date=${dateArray[dateArray.length - 1]}`;
+  console.log('🚀 ~ getRemoteData ~ url:', fullurl);
+  return await fetch(fullurl).then((response) => response.json());
+}
+
+export function showSpinner() {
+  const gridArea = document.querySelector('#image-grid-area');
+  gridArea.innerHTML =
+    '<div class="spinner-container"><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>';
 }
 
 // functions
@@ -24,44 +31,39 @@ export function incDecDate(incDec, date) {
   return result;
 }
 
-export function createDateArray() {
+export function createDateRange() {
   const dateSelector = document.getElementById('date-selector');
-  const articleNumber = document.querySelector('#article-number');
-  let articleCount = articleNumber.value;
-  let date = dateSelector.value;
-  let dates = [];
-  dates.push(date);
-  articleCount--;
-  while (articleCount > 0) {
-    let newDate = incDecDate(-1, date);
-    dates.push(newDate);
-    articleCount--;
-    date = newDate;
-  }
-  return dates;
-}
-
-export async function displayArticles(resultsArray) {
-  clearGrid();
-  resultsArray?.reverse();
-  resultsArray.forEach((element) => {
-    populateGrid(element);
+  let articlesToShow = document.querySelector('#article-number')?.value || 1;
+  const currentDate = new Date().toLocaleDateString('en-CA', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
   });
+
+  const dateRange = [];
+  for (let i = 0; i < articlesToShow; i++) {
+    dateRange.push(incDecDate(-i, currentDate));
+  }
+
+  return dateRange.reverse();
 }
 
 export function populateGrid(data) {
   const gridArea = document.querySelector('#image-grid-area');
-  const article = document.createElement('article');
-  const spinner = document.createElement('div');
-  spinner.classList.add('spinner', 'lds-roller');
-  spinner.innerHTML =
-    '<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>';
-  article.appendChild(spinner);
-  const content = `<a target="_blank" href="${data.hdurl}"  class="image-link"><img src="${data.url}" loading="lazy" class="images"></a><a target="_blank" class=""title-link><h5 class="title">${data.title}</h5></a>`;
-  article.innerHTML = content;
-  const img = article.querySelector('img');
-  img.addEventListener('load', () => {
-    article.classList.add('show');
+  gridArea.innerHTML = '';
+  data.forEach((articleData) => {
+    const article = document.createElement('article');
+    const spinner = document.createElement('div');
+    spinner.classList.add('spinner', 'lds-roller');
+    spinner.innerHTML =
+      '<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>';
+    article.appendChild(spinner);
+    const content = `<a target="_blank" href="${articleData.hdurl}"  class="image-link"><img src="${articleData.url}" loading="lazy" class="images"></a><a target="_blank" class=""title-link><h5 class="title">${articleData.title}</h5></a>`;
+    article.innerHTML = content;
+    const img = article.querySelector('img');
+    img.addEventListener('load', () => {
+      article.classList.add('show');
+    });
+    gridArea.appendChild(article);
   });
-  gridArea.appendChild(article);
 }

@@ -3,9 +3,9 @@ import {
   getRemoteData,
   clearGrid,
   incDecDate,
-  createDateArray,
-  displayArticles,
+  createDateRange,
   populateGrid,
+  showSpinner,
 } from './functions.mjs';
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -23,14 +23,10 @@ document.addEventListener('DOMContentLoaded', async function () {
   const todaysDate = dateSelector.value;
   let currentDate = dateSelector.value;
 
-  const spinner = document.createElement('div');
-  spinner.classList.add('spinner', 'lds-roller');
-  spinner.innerHTML =
-    '<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>';
-
-  const dateArray = createDateArray();
+  const dateArray = createDateRange();
+  showSpinner();
   const data = await getRemoteData(dateArray);
-  displayArticles(data);
+  populateGrid(data);
 
   //Events
   document
@@ -40,9 +36,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         alert('you are viewing the most recent pictures');
       } else {
         currentDate = incDecDate(1, currentDate);
-        const dateArray = createDateArray();
+        showSpinner();
+        const dateArray = createDateRange();
         const data = await getRemoteData(dateArray);
-        displayArticles(data);
+        populateGrid(data);
       }
     });
 
@@ -50,17 +47,18 @@ document.addEventListener('DOMContentLoaded', async function () {
     .getElementById('previous-page')
     .addEventListener('click', async function () {
       dateSelector.value = incDecDate(-1, dateSelector.value);
-      const dateArray = createDateArray();
+      showSpinner();
+      const dateArray = createDateRange();
       const data = await getRemoteData(dateArray);
-      displayArticles(data);
+      populateGrid(data);
     });
 
   document
     .getElementById('show-articles')
     .addEventListener('click', async function () {
-      console.log('show-articles');
-      const dateArray = createDateArray();
+      showSpinner();
+      const dateArray = createDateRange();
       const data = await getRemoteData(dateArray);
-      displayArticles(data);
+      populateGrid(data);
     });
 });
