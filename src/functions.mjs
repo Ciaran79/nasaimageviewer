@@ -35,7 +35,7 @@ export function incDecDate(incDec, date) {
 export function createDateRange() {
   const dateSelector = document.getElementById('date-selector');
   let articlesToShow = document.querySelector('#article-number')?.value || 1;
-  const currentDate = new Date().toLocaleDateString('en-CA', {
+  const currentDate = new Date(dateSelector.value).toLocaleDateString('en-CA', {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
@@ -59,7 +59,7 @@ export function populateGrid(data) {
     spinner.innerHTML =
       '<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>';
     article.appendChild(spinner);
-    const content = `<img src="${articleData.url}" loading="lazy" class="images" alt="${articleData.title}"><h5 class="title">${articleData.title}</h5><p class="article-date">${articleData.date}</p>`;
+    const content = `<img src="${articleData.url}" loading="lazy" class="images" alt="${articleData.title}"><h5 class="title">${articleData.title}</h5>`;
     article.innerHTML = content;
     const img = article.querySelector('img');
     img.addEventListener('load', () => {
