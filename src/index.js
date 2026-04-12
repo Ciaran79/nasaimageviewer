@@ -1,7 +1,6 @@
 import './scss/main.scss';
 import {
   getRemoteData,
-  clearGrid,
   incDecDate,
   createDateRange,
   populateGrid,

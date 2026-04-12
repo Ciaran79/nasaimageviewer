@@ -1,5 +1,6 @@
 const url = import.meta.env.VITE_URL;
 const apiKey = import.meta.env.VITE_API_KEY;
+import { openLightbox } from './lightbox.mjs';
 
 export async function getRemoteData(dateArray) {
   const fullurl =
@@ -58,12 +59,16 @@ export function populateGrid(data) {
     spinner.innerHTML =
       '<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>';
     article.appendChild(spinner);
-    const content = `<a target="_blank" href="${articleData.hdurl}"  class="image-link"><img src="${articleData.url}" loading="lazy" class="images"></a><a target="_blank" class=""title-link><h5 class="title">${articleData.title}</h5></a>`;
+    const content = `<img src="${articleData.url}" loading="lazy" class="images" alt="${articleData.title}"><h5 class="title">${articleData.title}</h5><p class="article-date">${articleData.date}</p>`;
     article.innerHTML = content;
     const img = article.querySelector('img');
     img.addEventListener('load', () => {
       article.classList.add('show');
     });
+    img.addEventListener('click', () => {
+      openLightbox(articleData.hdurl, articleData.title);
+    });
+    img.style.cursor = 'zoom-in';
     gridArea.appendChild(article);
   });
 }
